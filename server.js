@@ -94,7 +94,14 @@ app.get("/api/getFormData", async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// // Start the server
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
+
+// Export the app for Vercel serverless function
+module.exports = async (req, res) => {
+  // Ensure MongoDB is connected before handling any request
+  await connectToMongoDB();
+  app(req, res); // Call express handler for the request
+};
